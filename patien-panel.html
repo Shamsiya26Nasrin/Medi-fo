@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
+
+  <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+
+  <link rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap"
+    rel="stylesheet">
+
+
+  <style>
+
+    .bg-primary {
+      background: -webkit-linear-gradient(
+        left,
+        rgb(11, 133, 41),
+        #00c6ff
+      );
+    }
+
+    .list-group-item.active {
+      z-index: 2;
+      color: #fff;
+      background-color: rgb(11, 133, 41);
+      border-color: rgb(11, 133, 41);
+    }
+
+    .text-primary {
+      color: rgb(11, 133, 41) !important;
+    }
+
+    .btn-primary {
+      background-color: rgb(11, 133, 41);
+      border-color: rgb(11, 133, 41);
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+
+    #inputbtn:hover {
+      cursor: pointer;
+    }
+
+  </style>
+
+</head>
+
+
+<body style="padding-top:50px;">
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+
+  <a class="navbar-brand" href="#">
+
+    <i class="fa fa-user-plus" aria-hidden="true"></i>
+
+    Medifo
+
+  </a>
+
+
+  <button class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent">
+
+    <span class="navbar-toggler-icon"></span>
+
+  </button>
+
+
+  <div class="collapse navbar-collapse"
+    id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+
+        <a class="nav-link" href="#">
+
+          <i class="fa fa-sign-out"
+            aria-hidden="true"></i>
+
+          Logout
+
+        </a>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+</nav>
+
+
+
+<!-- ================= PAGE ================= -->
+
+<div class="container-fluid"
+  style="margin-top:50px;">
+
+
+  <h3 style="
+    margin-left:40%;
+    padding-bottom:20px;
+    font-family:'IBM Plex Sans', sans-serif;">
+
+    Welcome Patient
+
+  </h3>
+
+
+  <div class="row">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <div class="col-md-4"
+      style="max-width:25%; margin-top:3%;">
+
+
+      <div class="list-group"
+        id="list-tab"
+        role="tablist">
+
+
+        <a class="list-group-item list-group-item-action active"
+          id="list-dash-list"
+          data-toggle="list"
+          href="#list-dash">
+
+          Dashboard
+
+        </a>
+
+
+        <a class="list-group-item list-group-item-action"
+          id="list-home-list"
+          data-toggle="list"
+          href="#list-home">
+
+          Book Appointment
+
+        </a>
+
+
+        <a class="list-group-item list-group-item-action"
+          id="list-pat-list"
+          data-toggle="list"
+          href="#app-hist">
+
+          Appointment History
+
+        </a>
+
+
+        <a class="list-group-item list-group-item-action"
+          id="list-pres-list"
+          data-toggle="list"
+          href="#list-pres">
+
+          Prescriptions
+
+        </a>
+
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <div class="col-md-8"
+      style="margin-top:3%;">
+
+
+      <div class="tab-content"
+        id="nav-tabContent"
+        style="width:950px;">
+
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <div class="tab-pane fade show active"
+          id="list-dash">
+
+
+          <div class="container-fluid container-fullw bg-white">
+
+
+            <div class="row">
+
+
+              <!-- Book Appointment -->
+
+              <div class="col-sm-4"
+                style="left:5%;">
+
+
+                <div class="panel panel-white no-radius text-center">
+
+                  <div class="panel-body">
+
+
+                    <span class="fa-stack fa-2x">
+
+                      <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                      <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+
+                    </span>
+
+
+                    <h4 class="StepTitle"
+                      style="margin-top:5%;">
+
+                      Book My Appointment
+
+                    </h4>
+
+
+                    <p>
+
+                      <a href="#list-home"
+                        onclick="clickDiv('#list-home-list')">
+
+                        Book Appointment
+
+                      </a>
+
+                    </p>
+
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+              <!-- Appointment History -->
+
+              <div class="col-sm-4"
+                style="left:10%;">
+
+
+                <div class="panel panel-white no-radius text-center">
+
+                  <div class="panel-body">
+
+
+                    <span class="fa-stack fa-2x">
+
+                      <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                      <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i>
+
+                    </span>
+
+
+                    <h4 class="StepTitle"
+                      style="margin-top:5%;">
+
+                      My Appointments
+
+                    </h4>
+
+
+                    <p>
+
+                      <a href="#app-hist"
+                        onclick="clickDiv('#list-pat-list')">
+
+                        View Appointment History
+
+                      </a>
+
+                    </p>
+
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- Prescription -->
+
+            <div class="col-sm-4"
+              style="left:20%; margin-top:5%;">
+
+
+              <div class="panel panel-white no-radius text-center">
+
+                <div class="panel-body">
+
+
+                  <span class="fa-stack fa-2x">
+
+                    <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                    <i class="fa fa-list-ul fa-stack-1x fa-inverse"></i>
+
+                  </span>
+
+
+                  <h4 class="StepTitle"
+                    style="margin-top:5%;">
+
+                    Prescriptions
+
+                  </h4>
+
+
+                  <p>
+
+                    <a href="#list-pres"
+                      onclick="clickDiv('#list-pres-list')">
+
+                      View Prescription List
+
+                    </a>
+
+                  </p>
+
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ================= BOOK APPOINTMENT ================= -->
+
+        <div class="tab-pane fade"
+          id="list-home">
+
+
+          <div class="container-fluid">
+
+            <div class="card">
+
+
+              <div class="card-body">
+
+
+                <center>
+
+                  <h4>Create an appointment</h4>
+
+                </center>
+
+                <br>
+
+
+                <form class="form-group">
+
+
+                  <div class="row">
+
+
+                    <div class="col-md-4">
+
+                      <label>
+                        Specialization:
+                      </label>
+
+                    </div>
+
+
+                    <div class="col-md-8">
+
+                      <select class="form-control">
+
+                        <option selected disabled>
+                          Select Specialization
+                        </option>
+
+                        <option>
+                          General
+                        </option>
+
+                        <option>
+                          Cardiologist
+                        </option>
+
+                        <option>
+                          Neurologist
+                        </option>
+
+                        <option>
+                          Pediatrician
+                        </option>
+
+                      </select>
+
+                    </div>
+
+
+                    <br><br>
+
+
+
+                    <div class="col-md-4">
+
+                      <label>
+                        Doctors:
+                      </label>
+
+                    </div>
+
+
+                    <div class="col-md-8">
+
+                      <select class="form-control">
+
+                        <option selected disabled>
+                          Select Doctor
+                        </option>
+
+                        <option>
+                          Dr. Rahman
+                        </option>
+
+                        <option>
+                          Dr. Ahmed
+                        </option>
+
+                      </select>
+
+                    </div>
+
+
+                    <br><br>
+
+
+
+                    <div class="col-md-4">
+
+                      <label>
+                        Consultancy Fees
+                      </label>
+
+                    </div>
+
+
+                    <div class="col-md-8">
+
+                      <input class="form-control"
+                        type="text"
+                        value="1000"
+                        readonly>
+
+                    </div>
+
+
+                    <br><br>
+
+
+
+                    <div class="col-md-4">
+
+                      <label>
+                        Appointment Date
+                      </label>
+
+                    </div>
+
+
+                    <div class="col-md-8">
+
+                      <input type="date"
+                        class="form-control">
+
+                    </div>
+
+
+                    <br><br>
+
+
+
+                    <div class="col-md-4">
+
+                      <label>
+                        Appointment Time
+                      </label>
+
+                    </div>
+
+
+                    <div class="col-md-8">
+
+
+                      <select class="form-control">
+
+                        <option selected disabled>
+                          Select Time
+                        </option>
+
+                        <option>
+                          8:00 AM
+                        </option>
+
+                        <option>
+                          10:00 AM
+                        </option>
+
+                        <option>
+                          12:00 PM
+                        </option>
+
+                        <option>
+                          2:00 PM
+                        </option>
+
+                        <option>
+                          4:00 PM
+                        </option>
+
+                      </select>
+
+
+                    </div>
+
+
+                    <br><br>
+
+
+
+                    <div class="col-md-4">
+
+
+                      <button type="button"
+                        class="btn btn-primary">
+
+                        Create new entry
+
+                      </button>
+
+
+                    </div>
+
+
+                  </div>
+
+
+                </form>
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <br>
+
+        </div>
+
+
+
+        <!-- ================= APPOINTMENT HISTORY ================= -->
+
+        <div class="tab-pane fade"
+          id="app-hist">
+
+
+          <h4>Appointment History</h4>
+
+          <br>
+
+
+          <table class="table table-hover">
+
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Doctor Name
+                </th>
+
+                <th>
+                  Consultancy Fees
+                </th>
+
+                <th>
+                  Appointment Date
+                </th>
+
+                <th>
+                  Appointment Time
+                </th>
+
+                <th>
+                  Current Status
+                </th>
+
+                <th>
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+              <!-- Sample Data -->
+
+              <tr>
+
+                <td>
+                  Dr. Rahman
+                </td>
+
+                <td>
+                  1000
+                </td>
+
+                <td>
+                  2026-09-15
+                </td>
+
+                <td>
+                  10:00 AM
+                </td>
+
+                <td>
+
+                  Active
+
+                </td>
+
+                <td>
+
+                  <button type="button"
+                    class="btn btn-danger">
+
+                    Cancel
+
+                  </button>
+
+                </td>
+
+              </tr>
+
+
+            </tbody>
+
+          </table>
+
+
+        </div>
+
+
+
+        <!-- ================= PRESCRIPTIONS ================= -->
+
+        <div class="tab-pane fade"
+          id="list-pres">
+
+
+          <h4>Prescription List</h4>
+
+          <br>
+
+
+          <table class="table table-hover">
+
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Doctor Name
+                </th>
+
+                <th>
+                  Appointment ID
+                </th>
+
+                <th>
+                  Appointment Date
+                </th>
+
+                <th>
+                  Appointment Time
+                </th>
+
+                <th>
+                  Diseases
+                </th>
+
+                <th>
+                  Allergies
+                </th>
+
+                <th>
+                  Prescriptions
+                </th>
+
+                <th>
+                  Bill Payment
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+              <!-- Sample Data -->
+
+              <tr>
+
+                <td>
+                  Dr. Rahman
+                </td>
+
+                <td>
+                  101
+                </td>
+
+                <td>
+                  2026-09-15
+                </td>
+
+                <td>
+                  10:00 AM
+                </td>
+
+                <td>
+                  Fever
+                </td>
+
+                <td>
+                  None
+                </td>
+
+                <td>
+                  Sample Medicine
+                </td>
+
+                <td>
+
+                  <button type="button"
+                    class="btn btn-success">
+
+                    Pay Bill
+
+                  </button>
+
+                </td>
+
+              </tr>
+
+
+            </tbody>
+
+          </table>
+
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+  function clickDiv(id) {
+
+    document.querySelector(id).click();
+
+  }
+
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>
