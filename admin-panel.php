@@ -1,0 +1,544 @@
+<?php
+session_start();
+
+
+$con = mysqli_connect("localhost", "root", "", "myhmsdb");
+
+if (!$con) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
+$message = "";
+
+
+if (isset($_POST['docsub'])) {
+
+    $doctor    = trim($_POST['doctor']);
+    $dpassword = trim($_POST['dpassword']);
+    $cdpassword = trim($_POST['cdpassword']);
+    $demail    = trim($_POST['demail']);
+    $spec      = trim($_POST['special']);
+    $docFees   = trim($_POST['docFees']);
+
+    if ($dpassword !== $cdpassword) {
+        $message = "Passwords do not match.";
+    } else {
+
+       
+        $check = mysqli_prepare($con, "SELECT email FROM doctb WHERE email = ?");
+        mysqli_stmt_bind_param($check, "s", $demail);
+        mysqli_stmt_execute($check);
+        mysqli_stmt_store_result($check);
+
+        if (mysqli_stmt_num_rows($check) > 0) {
+            $message = "A doctor with this email already exists.";
+        } else {
+
+            
+            $stmt = mysqli_prepare(
+                $con,
+                "INSERT INTO doctb (username, password, email, spec, docFees)
+                 VALUES (?, ?, ?, ?, ?)"
+            );
+
+            mysqli_stmt_bind_param(
+                $stmt,
+                "sssss",
+                $doctor,
+                $dpassword,
+                $demail,
+                $spec,
+                $docFees
+            );
+
+            if (mysqli_stmt_execute($stmt)) {
+                $message = "Doctor added successfully!";
+            } else {
+                $message = "Unable to add doctor.";
+            }
+
+            mysqli_stmt_close($stmt);
+        }
+
+        mysqli_stmt_close($check);
+    }
+}
+
+
+if (isset($_POST['docsub1'])) {
+
+    $demail = trim($_POST['demail']);
+
+    $stmt = mysqli_prepare($con, "DELETE FROM doctb WHERE email = ?");
+    mysqli_stmt_bind_param($stmt, "s", $demail);
+    mysqli_stmt_execute($stmt);
+
+    if (mysqli_stmt_affected_rows($stmt) > 0) {
+        $message = "Doctor deleted successfully!";
+    } else {
+        $message = "Doctor not found.";
+    }
+
+    mysqli_stmt_close($stmt);
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+
+   
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <a class="navbar-brand" href="#"><i class="fa fa-user-plus" aria-hidden="true"></i> Medifo </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <script >
+    var check = function() {
+  if (document.getElementById('dpassword').value ==
+    document.getElementById('cdpassword').value) {
+    document.getElementById('message').style.color = '#5dd05d';
+    document.getElementById('message').innerHTML = 'Matched';
+  } else {
+    document.getElementById('message').style.color = '#f55252';
+    document.getElementById('message').innerHTML = 'Not Matching';
+  }
+}
+
+    function alphaOnly(event) {
+  var key = event.keyCode;
+  return ((key >= 65 && key <= 90) || key == 8 || key == 32);
+};
+  </script>
+
+  <style >
+    .bg-primary {
+    background: -webkit-linear-gradient(left,rgb(11, 133, 41),rgb(11, 133, 41));
+}
+
+.col-md-4{
+  max-width:20% ;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color:rgb(11, 133, 41);
+    border-color:rgb(11, 133, 41);
+}
+.text-primary {
+    color: rgb(11, 133, 41);
+}
+
+#cpass {
+  display: -webkit-box;
+}
+
+#list-app{
+  font-size:15px;
+}
+
+.btn-primary{
+  background-color: rgb(11, 133, 41);
+  border-color:rgb(11, 133, 41);
+}
+  </style>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     <ul class="navbar-nav mr-auto">
+       <li class="nav-item">
+        <a class="nav-link" href="logout1.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="#"></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+  </head>
+  <style type="text/css">
+    button:hover{cursor:pointer;}
+    #inputbtn:hover{cursor:pointer;}
+  </style>
+  <body style="padding-top:50px;">
+  <?php if ($message != ""): ?>
+    <script>
+      alert(<?php echo json_encode($message); ?>);
+    </script>
+  <?php endif; ?>
+   <div class="container-fluid" style="margin-top:50px;">
+    <h3 style = "margin-left: 40%; padding-bottom: 20px;font-family: 'IBM Plex Sans', sans-serif;"> WELCOME ADMIN </h3>
+    <div class="row">
+  <div class="col-md-4" style="max-width:25%;margin-top: 3%;">
+    <div class="list-group" id="list-tab" role="tablist">
+      <a class="list-group-item list-group-item-action active" id="list-dash-list" data-toggle="list" href="#list-dash" role="tab" aria-controls="home">Dashboard</a>
+      <a class="list-group-item list-group-item-action" href="#list-doc" id="list-doc-list"  role="tab"    aria-controls="home" data-toggle="list">Doctor List</a>
+      <a class="list-group-item list-group-item-action" href="#list-pat" id="list-pat-list"  role="tab" data-toggle="list" aria-controls="home">Patient List</a>
+      <a class="list-group-item list-group-item-action" href="#list-app" id="list-app-list"  role="tab" data-toggle="list" aria-controls="home">Appointment Details</a>
+      <a class="list-group-item list-group-item-action" href="#list-pres" id="list-pres-list"  role="tab" data-toggle="list" aria-controls="home">Prescription List</a>
+      <a class="list-group-item list-group-item-action" href="#list-settings" id="list-adoc-list"  role="tab" data-toggle="list" aria-controls="home">Add Doctor</a>
+      <a class="list-group-item list-group-item-action" href="#list-settings1" id="list-ddoc-list"  role="tab" data-toggle="list" aria-controls="home">Delete Doctor</a>
+      <a class="list-group-item list-group-item-action" href="#list-mes" id="list-mes-list"  role="tab" data-toggle="list" aria-controls="home">Queries</a>
+      
+    </div><br>
+  </div>
+  <div class="col-md-8" style="margin-top: 3%;">
+    <div class="tab-content" id="nav-tabContent" style="width: 950px;">
+
+
+
+      <div class="tab-pane fade show active" id="list-dash" role="tabpanel" aria-labelledby="list-dash-list">
+        <div class="container-fluid container-fullw bg-white" >
+              <div class="row">
+               <div class="col-sm-4">
+                  <div class="panel panel-white no-radius text-center">
+                    <div class="panel-body">
+                      <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-users fa-stack-1x fa-inverse"></i> </span>
+                      <h4 class="StepTitle" style="margin-top: 5%;">Doctor List</h4>
+                      <script>
+                        function clickDiv(id) {
+                          document.querySelector(id).click();
+                        }
+                      </script> 
+                      <p class="links cl-effect-1">
+                        <a href="#list-doc" onclick="clickDiv('#list-doc-list')">
+                          View Doctors
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4" style="left: -3%">
+                  <div class="panel panel-white no-radius text-center">
+                    <div class="panel-body" >
+                      <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-users fa-stack-1x fa-inverse"></i> </span>
+                      <h4 class="StepTitle" style="margin-top: 5%;">Patient List</h4>
+                      
+                      <p class="cl-effect-1">
+                        <a href="#app-hist" onclick="clickDiv('#list-pat-list')">
+                          View Patients
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              
+
+                <div class="col-sm-4">
+                  <div class="panel panel-white no-radius text-center">
+                    <div class="panel-body" >
+                      <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
+                      <h4 class="StepTitle" style="margin-top: 5%;">Appointment Details</h4>
+                    
+                      <p class="cl-effect-1">
+                        <a href="#app-hist" onclick="clickDiv('#list-app-list')">
+                          View Appointments
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="row">
+                <div class="col-sm-4" style="left: 13%;margin-top: 5%;">
+                  <div class="panel panel-white no-radius text-center">
+                    <div class="panel-body" >
+                      <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-list-ul fa-stack-1x fa-inverse"></i> </span>
+                      <h4 class="StepTitle" style="margin-top: 5%;">Prescription List</h4>
+                    
+                      <p class="cl-effect-1">
+                        <a href="#list-pres" onclick="clickDiv('#list-pres-list')">
+                          View Prescriptions
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-sm-4" style="left: 18%;margin-top: 5%">
+                  <div class="panel panel-white no-radius text-center">
+                    <div class="panel-body" >
+                      <span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-plus fa-stack-1x fa-inverse"></i> </span>
+                      <h4 class="StepTitle" style="margin-top: 5%;">Manage Doctors</h4>
+                    
+                      <p class="cl-effect-1">
+                        <a href="#app-hist" onclick="clickDiv('#list-adoc-list')">Add Doctors</a>
+                        <a href="#app-hist" onclick="clickDiv('#list-ddoc-list')">
+                          Delete Doctors
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                        
+
+      
+                
+              </div>
+            </div>
+      
+                
+      
+
+
+
+
+
+
+      <div class="tab-pane fade" id="list-doc" role="tabpanel" aria-labelledby="list-home-list">
+              
+
+              <div class="col-md-8">
+      <form class="form-group" onsubmit="return false;">
+        <div class="row">
+        <div class="col-md-10"><input type="text" name="doctor_contact" placeholder="Enter Email ID" class = "form-control"></div>
+        <div class="col-md-2"><input type="submit" name="doctor_search_submit" class="btn btn-primary" value="Search"></div></div>
+      </form>
+    </div>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Specialization</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Fees</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $query = mysqli_query($con, "SELECT username, spec, email, docFees FROM doctb ORDER BY username ASC");
+
+                  if (mysqli_num_rows($query) > 0) {
+                      while ($row = mysqli_fetch_assoc($query)) {
+                  ?>
+                    <tr>
+                      <td><?php echo htmlspecialchars($row['username']); ?></td>
+                      <td><?php echo htmlspecialchars($row['spec']); ?></td>
+                      <td><?php echo htmlspecialchars($row['email']); ?></td>
+                      <td>********</td>
+                      <td><?php echo htmlspecialchars($row['docFees']); ?></td>
+                    </tr>
+                  <?php
+                      }
+                  } else {
+                  ?>
+                    <tr>
+                      <td colspan="5" class="text-center">No doctors added yet.</td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+        <br>
+      </div>
+    
+
+    <div class="tab-pane fade" id="list-pat" role="tabpanel" aria-labelledby="list-pat-list">
+
+       <div class="col-md-8">
+      <form class="form-group" onsubmit="return false;">
+        <div class="row">
+        <div class="col-md-10"><input type="text" name="patient_contact" placeholder="Enter Contact" class = "form-control"></div>
+        <div class="col-md-2"><input type="submit" name="patient_search_submit" class="btn btn-primary" value="Search"></div></div>
+      </form>
+    </div>
+        
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                  <th scope="col">Patient ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Password</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td colspan="7" class="text-center">Patient data will be connected later.</td>
+                    </tr>
+                </tbody>
+              </table>
+        <br>
+      </div>
+
+
+      <div class="tab-pane fade" id="list-pres" role="tabpanel" aria-labelledby="list-pres-list">
+
+       <div class="col-md-8">
+  
+        <div class="row">
+        
+    
+        
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                  <th scope="col">Doctor</th>
+                    <th scope="col">Patient ID</th>
+                    <th scope="col">Appointment ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Appointment Date</th>
+                    <th scope="col">Appointment Time</th>
+                    <th scope="col">Disease</th>
+                    <th scope="col">Allergy</th>
+                    <th scope="col">Prescription</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td colspan="10" class="text-center">Prescription data will be connected later.</td>
+                    </tr>
+                </tbody>
+              </table>
+        <br>
+      </div>
+      </div>
+      </div>
+
+
+
+
+      <div class="tab-pane fade" id="list-app" role="tabpanel" aria-labelledby="list-pat-list">
+
+         <div class="col-md-8">
+      <form class="form-group" onsubmit="return false;">
+        <div class="row">
+        <div class="col-md-10"><input type="text" name="app_contact" placeholder="Enter Contact" class = "form-control"></div>
+        <div class="col-md-2"><input type="submit" name="app_search_submit" class="btn btn-primary" value="Search"></div></div>
+      </form>
+    </div>
+        
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                  <th scope="col">Appointment ID</th>
+                  <th scope="col">Patient ID</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Consultancy Fees</th>
+                    <th scope="col">Appointment Date</th>
+                    <th scope="col">Appointment Time</th>
+                    <th scope="col">Appointment Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td colspan="12" class="text-center">Appointment data will be connected later.</td>
+                    </tr>
+                </tbody>
+              </table>
+        <br>
+      </div>
+
+<div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+
+      <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+        <form class="form-group" method="post" action="admin-panel.php">
+          <div class="row">
+                  <div class="col-md-4"><label>Doctor Name:</label></div>
+                  <div class="col-md-8"><input type="text" class="form-control" name="doctor" onkeydown="return alphaOnly(event);" required></div><br><br>
+                  <div class="col-md-4"><label>Specialization:</label></div>
+                  <div class="col-md-8">
+                   <select name="special" class="form-control" id="special" required="required">
+                      <option value="head" name="spec" disabled selected>Select Specialization</option>
+                      <option value="General" name="spec">General</option>
+                      <option value="Cardiologist" name="spec">Cardiologist</option>
+                      <option value="Neurologist" name="spec">Neurologist</option>
+                      <option value="Pediatrician" name="spec">Pediatrician</option>
+                    </select>
+                    </div><br><br>
+                  <div class="col-md-4"><label>Email ID:</label></div>
+                  <div class="col-md-8"><input type="email"  class="form-control" name="demail" required></div><br><br>
+                  <div class="col-md-4"><label>Password:</label></div>
+                  <div class="col-md-8"><input type="password" class="form-control"  onkeyup='check();' name="dpassword" id="dpassword"  required></div><br><br>
+                  <div class="col-md-4"><label>Confirm Password:</label></div>
+                  <div class="col-md-8"  id='cpass'><input type="password" class="form-control" onkeyup='check();' name="cdpassword" id="cdpassword" required><span id='message'></span> </div><br><br>
+                   
+                  
+                  <div class="col-md-4"><label>Consultancy Fees:</label></div>
+                  <div class="col-md-8"><input type="text" class="form-control"  name="docFees" required></div><br><br>
+                </div>
+          <input type="submit" name="docsub" value="Add Doctor" class="btn btn-primary">
+        </form>
+      </div>
+
+      <div class="tab-pane fade" id="list-settings1" role="tabpanel" aria-labelledby="list-settings1-list">
+        <form class="form-group" method="post" action="admin-panel.php">
+          <div class="row">
+          
+                  <div class="col-md-4"><label>Email ID:</label></div>
+                  <div class="col-md-8"><input type="email"  class="form-control" name="demail" required></div><br><br>
+                  
+                </div>
+          <input type="submit" name="docsub1" value="Delete Doctor" class="btn btn-primary" onclick="return confirm('Do you really want to delete this doctor?')">
+        </form>
+      </div>
+
+
+       <div class="tab-pane fade" id="list-attend" role="tabpanel" aria-labelledby="list-attend-list">...</div>
+
+       <div class="tab-pane fade" id="list-mes" role="tabpanel" aria-labelledby="list-mes-list">
+
+         <div class="col-md-8">
+      <form class="form-group" onsubmit="return false;">
+        <div class="row">
+        <div class="col-md-10"><input type="text" name="mes_contact" placeholder="Enter Contact" class = "form-control"></div>
+        <div class="col-md-2"><input type="submit" name="mes_search_submit" class="btn btn-primary" value="Search"></div></div>
+      </form>
+    </div>
+        
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact</th>
+                    <th scope="col">Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td colspan="4" class="text-center">Query data will be connected later.</td>
+                    </tr>
+                </tbody>
+              </table>
+        <br>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+   </div>
+   
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.all.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Medifo Admin Panel</title>
+
+
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.min.css">
+
+
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        .bg-primary {
+            background: rgb(11, 133, 41) !important;
+        }
+
+        .col-md-4 {
+            max-width: 20% !important;
+        }
+
+        .list-group-item.active {
+            color: white;
+            background-color: rgb(11, 133, 41);
+            border-color: rgb(11, 133, 41);
+        }
+
+        .text-primary {
+            color: rgb(11, 133, 41) !important;
+        }
+
+        .btn-primary {
+            background-color: rgb(11, 133, 41);
+            border-color: rgb(11, 133, 41);
+        }
+
+        #cpass {
+            display: -webkit-box;
+        }
+
+        button:hover,
+        #inputbtn:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+
+<body style="padding-top:50px;">
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+
+        <a class="navbar-brand" href="#">
+            <i class="fa fa-user-plus"></i>
+            Medifo
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fa fa-sign-out"></i>
+                        Logout
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+
+
+    <div class="container-fluid" style="margin-top:50px;">
+
+        <h3 style="
+        margin-left:40%;
+        padding-bottom:20px;
+        font-family:'IBM Plex Sans', sans-serif;">
+
+            WELCOME ADMIN
+
+        </h3>
+
+
+        <div class="row">
+
+
+
+
+            <div class="col-md-4" style="max-width:25%; margin-top:3%;">
+
+                <div class="list-group" id="list-tab" role="tablist">
+
+                    <a class="list-group-item list-group-item-action active" data-toggle="list" href="#list-dash">
+
+                        Dashboard
+
+                    </a>
+
+
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-doc">
+
+                        Doctor List
+
+                    </a>
+
+
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-pat">
+
+                        Patient List
+
+                    </a>
+
+
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-app">
+
+                        Appointment Details
+
+                    </a>
+
+
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-pres">
+
+                        Prescription List
+
+                    </a>
+
+
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-add-doctor">
+
+                        Add Doctor
+
+                    </a>
+
+
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-delete-doctor">
+
+                        Delete Doctor
+
+                    </a>
+
+
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#list-query">
+
+                        Queries
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+
+            <div class="col-md-8" style="margin-top:3%;">
+
+                <div class="tab-content">
+
+
+
+
+                    <div class="tab-pane fade show active" id="list-dash">
+
+                        <div class="container-fluid">
+
+                            <div class="row">
+
+
+                                <!-- Doctor -->
+
+                                <div class="col-sm-4">
+
+                                    <div class="text-center">
+
+                                        <span class="fa-stack fa-2x">
+
+                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                                            <i class="fa fa-users fa-stack-1x fa-inverse"></i>
+
+                                        </span>
+
+                                        <h4>Doctor List</h4>
+
+                                        <p>
+                                            View Doctors
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <div class="col-sm-4">
+
+                                    <div class="text-center">
+
+                                        <span class="fa-stack fa-2x">
+
+                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                                            <i class="fa fa-users fa-stack-1x fa-inverse"></i>
+
+                                        </span>
+
+                                        <h4>Patient List</h4>
+
+                                        <p>
+                                            View Patients
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <div class="col-sm-4">
+
+                                    <div class="text-center">
+
+                                        <span class="fa-stack fa-2x">
+
+                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                                            <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i>
+
+                                        </span>
+
+                                        <h4>Appointment Details</h4>
+
+                                        <p>
+                                            View Appointments
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <br><br>
+
+
+                            <div class="row">
+
+
+
+                                <div class="col-sm-4">
+
+                                    <div class="text-center">
+
+                                        <span class="fa-stack fa-2x">
+
+                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                                            <i class="fa fa-list-ul fa-stack-1x fa-inverse"></i>
+
+                                        </span>
+
+                                        <h4>Prescription List</h4>
+
+                                        <p>
+                                            View Prescriptions
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <div class="col-sm-4">
+
+                                    <div class="text-center">
+
+                                        <span class="fa-stack fa-2x">
+
+                                            <i class="fa fa-square fa-stack-2x text-primary"></i>
+
+                                            <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+
+                                        </span>
+
+                                        <h4>Manage Doctors</h4>
+
+                                        <p>
+                                            Add / Delete Doctors
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade" id="list-doc">
+
+                        <h3>Doctor List</h3>
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Doctor Name</th>
+                                    <th>Specialization</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Fees</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+
+
+                                <tr>
+                                    <td>Dr. Rahman</td>
+                                    <td>Cardiologist</td>
+                                    <td>doctor@gmail.com</td>
+                                    <td>******</td>
+                                    <td>1000</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade" id="list-pat">
+
+                        <h3>Patient List</h3>
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>1</td>
+                                    <td>Nusrat</td>
+                                    <td>Ahmed</td>
+                                    <td>Female</td>
+                                    <td>patient@gmail.com</td>
+                                    <td>01700000000</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade" id="list-app">
+
+                        <h3>Appointment Details</h3>
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Fees</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>1</td>
+                                    <td>Nusrat Ahmed</td>
+                                    <td>Dr. Rahman</td>
+                                    <td>1000</td>
+                                    <td>2026-09-13</td>
+                                    <td>10:00 AM</td>
+                                    <td>Active</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade" id="list-pres">
+
+                        <h3>Prescription List</h3>
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <tr>
+                                    <th>Doctor</th>
+                                    <th>Patient</th>
+                                    <th>Disease</th>
+                                    <th>Allergy</th>
+                                    <th>Prescription</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Dr. Rahman</td>
+                                    <td>Nusrat Ahmed</td>
+                                    <td>Fever</td>
+                                    <td>None</td>
+                                    <td>Sample Prescription</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade" id="list-add-doctor">
+
+                        <h3>Add Doctor</h3>
+
+                        <form>
+
+                            <div class="form-group">
+
+                                <label>Doctor Name</label>
+
+                                <input type="text" class="form-control">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Specialization</label>
+
+                                <select class="form-control">
+
+                                    <option>Select Specialization</option>
+                                    <option>General</option>
+                                    <option>Cardiologist</option>
+                                    <option>Neurologist</option>
+                                    <option>Pediatrician</option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Email</label>
+
+                                <input type="email" class="form-control">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Password</label>
+
+                                <input type="password" class="form-control">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label>Consultancy Fees</label>
+
+                                <input type="number" class="form-control">
+
+                            </div>
+
+
+                            <button type="button" class="btn btn-primary">
+
+                                Add Doctor
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade" id="list-delete-doctor">
+
+                        <h3>Delete Doctor</h3>
+
+                        <form>
+
+                            <div class="form-group">
+
+                                <label>Doctor Email</label>
+
+                                <input type="email" class="form-control">
+
+                            </div>
+
+                            <button type="button" class="btn btn-primary">
+
+                                Delete Doctor
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade" id="list-query">
+
+                        <h3>Queries</h3>
+
+                        <table class="table table-hover">
+
+                            <thead>
+
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Message</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td>Example User</td>
+                                    <td>user@gmail.com</td>
+                                    <td>01700000000</td>
+                                    <td>Example query</td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>
